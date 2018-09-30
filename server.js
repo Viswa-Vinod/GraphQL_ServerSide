@@ -18,6 +18,10 @@ const schema = new gql.GraphQLSchema({
       message: {
         // TODO: tell GraphQL that the message field should be a string type
         // and that it should resolve with the messageAsString string
+        type: gql.GraphQLString,
+        resolve() {
+          return messageAsString
+        }
       },
       // if we want to get our message
       // as a key on an objet. note that
@@ -26,6 +30,16 @@ const schema = new gql.GraphQLSchema({
       messageAsObject: {
         // TODO: tell GraphQL that the messageAsObject field should be an Object type
         // and that it should resolve with the messageAsObject object
+        type: new gql.GraphQLObjectType({
+          name: 'messageAsObject',
+          fields: {
+            message: {
+              type: new gql.GraphQLNonNull(GraphQLString)
+            }
+          }
+        }),
+        resolve() { return messageAsObject }
+
       }
     }
   })
